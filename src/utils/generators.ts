@@ -40,7 +40,7 @@ export const mailGenerator = ({ username = 'UserName', password = '123456' }: { 
 
 export const generateInvitationEmail = ({ email, userName, testId, date = new Date() }:
 { email?: string, userName?: string, testId: string, date: Date | string }) => {
-  if (email === undefined) return
+  if (email === undefined) return null
 
   const formatedDate = new Date(date).toLocaleDateString()
 
@@ -76,7 +76,7 @@ export const generateInvitationEmail = ({ email, userName, testId, date = new Da
 
 export const generateReAsignationEmail = ({ email, userName, testId, date = new Date() }:
 { email?: string, userName?: string, testId: string, date: Date | string }) => {
-  if (email === undefined) return
+  if (email === undefined) return null
 
   const formatedDate = new Date(date).toLocaleDateString()
 
