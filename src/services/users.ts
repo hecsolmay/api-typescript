@@ -133,7 +133,7 @@ export const updateUser = async (id: string, userFieldsDTO: UserUpdateDTO) => {
 
   console.log(updatedUserFields)
 
-  const updatedUser = await User.update(updatedUserFields, { where: { userId: id }, individualHooks: true })
+  const [updatedUser] = await User.update(updatedUserFields, { where: { userId: id }, individualHooks: true })
 
   return updatedUser
 }

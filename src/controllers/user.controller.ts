@@ -64,7 +64,7 @@ export const updateById = async (req: Request, res: Response) => {
     const userFields = toUpdateUserFields(req.body)
     const updatedUser = await services.updateUser(id, userFields)
 
-    if (updatedUser === null) {
+    if (updatedUser === 0) {
       return res.status(404).json({ message: 'User Not Found' })
     }
 
