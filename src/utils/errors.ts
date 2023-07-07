@@ -4,7 +4,14 @@ import { JsonWebTokenError, TokenExpiredError } from 'jsonwebtoken'
 export class ValidationRequestError extends Error {
   constructor (message: string) {
     super(message)
-    this.name = 'ValidationError'
+    this.name = 'ValidationRequestError'
+  }
+}
+
+export class MulterValidationError extends Error {
+  constructor (message: string) {
+    super(message)
+    this.name = 'MulterValidationError'
   }
 }
 
@@ -21,6 +28,10 @@ export function handleError (error: unknown, res: Response): Response<any, Recor
 
   if (error instanceof TokenExpiredError) {
     return res.status(403).json({ message: 'Token Expired Error', error: error.message })
+  }
+
+  if (error instanceof MulterValidationError) {
+    return res.status(400).json({ message: 'Multer validation error', error: error.message })
   }
 
   if (error instanceof Error) {

@@ -31,7 +31,7 @@ export enum EMAIL_STATUS {
 export const IMAGE_EXTENSION = ['.jpg', '.jpeg', '.png', '.gif']
 
 export const FILE_SIZE_NAMES = Object.freeze({
-  main: 'main-',
-  thumbnail: 'thumbnail-',
-  thumbnailPreview: 'thumbnail-preview-'
+  main: 'main',
+  thumbnail: 'thumbnail',
+  thumbnailPreview: 'thumbnail-preview'
 })
