@@ -1,4 +1,5 @@
 import { type Response } from 'express'
+import { JsonWebTokenError, TokenExpiredError } from 'jsonwebtoken'
 
 export class ValidationRequestError extends Error {
   constructor (message: string) {
@@ -12,6 +13,14 @@ export function handleError (error: unknown, res: Response): Response<any, Recor
 
   if (error instanceof ValidationRequestError) {
     return res.status(400).json({ message: 'Bad Request', error: error.message })
+  }
+
+  if (error instanceof JsonWebTokenError) {
+    return res.status(400).json({ message: 'Error in the JsonWebToken', error: error.message })
+  }
+
+  if (error instanceof TokenExpiredError) {
+    return res.status(403).json({ message: 'Token Expired Error', error: error.message })
   }
 
   if (error instanceof Error) {

@@ -1,10 +1,14 @@
 import jwt from 'jsonwebtoken'
 import { secret, expires, refreshSecret, refreshExpired } from '../config'
 
-export const tokenSign = (data: any) => jwt.sign(data, secret, { expiresIn: expires })
+interface TokenInfo {
+  id: string
+}
 
-export const tokenVerify = (token: string) => jwt.verify(token, secret)
+export const tokenSign = (data: TokenInfo) => jwt.sign(data, secret, { expiresIn: expires })
 
-export const tokenRefreshSign = (data: any) => jwt.sign(data, refreshSecret, { expiresIn: refreshExpired })
+export const tokenVerify = (token: string) => jwt.verify(token, secret) as TokenInfo
 
-export const verifyRefresh = (token: string) => jwt.verify(token, refreshSecret)
+export const tokenRefreshSign = (data: TokenInfo) => jwt.sign(data, refreshSecret, { expiresIn: refreshExpired })
+
+export const verifyRefresh = (token: string) => jwt.verify(token, refreshSecret) as TokenInfo
