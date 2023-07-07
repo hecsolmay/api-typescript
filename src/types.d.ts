@@ -11,4 +11,28 @@ export interface RequestWithUser extends Request {
   rol: UserTypesAttributes
 }
 
+export interface PaginationInfo {
+  currentPage: number
+  limit: number
+  totalResults: number
+  totalPages: number
+  hasNextPage: boolean
+  hasPreviousPage: boolean
+  nextPage: number | null
+  prevPage: number | null
+}
+
+export interface PaginationQueryParams {
+  limit: number
+  page: number
+  offset: number
+}
+
+export interface UserQueryParams {
+  q: string
+  getDeleted: boolean
+}
+
+export interface UserQueryWithPagination extends UserQueryParams, PaginationQueryParams {}
+export type UserUpdateDTO = Partial<CreateUserDTO>
 export type SignInFields = Pick<UserAttributes, 'email' | 'password'>

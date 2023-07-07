@@ -1,15 +1,14 @@
-interface ParamsUser {
-  q?: string
-  getDeleted?: boolean
-}
+import { type UserQueryParams, type UserQueryWithPagination } from '../types'
+import { getLimitOffSet } from './pagination'
 
-export const getParamsUser = (object: ParamsUser) => {
-  const { q = '', getDeleted = false } = object
+export const getUserQueryWithPagination = (object: any): UserQueryWithPagination => {
+  const { q = '' } = object
 
-  return {
-    q,
-    getDeleted
-  }
+  const pagination = getLimitOffSet(object)
+
+  const query: UserQueryParams = { getDeleted: false, q }
+
+  return { ...query, ...pagination }
 }
 
 export const getParamsTest = (object: any) => {

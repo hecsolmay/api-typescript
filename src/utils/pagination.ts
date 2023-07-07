@@ -1,8 +1,9 @@
+import { type PaginationInfo, type PaginationQueryParams } from '../types'
 
-export const getLimitOffSet = (object: any) => {
+export const getLimitOffSet = (object: any): PaginationQueryParams => {
   const { limit = 10, page = 1 } = object
 
-  const finalLimit = limit > 0 ? limit : 1
+  const finalLimit = limit > 0 ? limit : 10
   const finalPage = page > 0 ? page : 1
   const offset = finalLimit * (finalPage - 1)
 
@@ -13,7 +14,7 @@ export const getLimitOffSet = (object: any) => {
   }
 }
 
-export const getInfoPage = ({ limit = 10, count = 0, currentPage = 1 }) => {
+export const getInfoPage = ({ limit = 10, count = 0, currentPage = 1 }): PaginationInfo => {
   const totalPages = Math.ceil(count / limit)
   const page = currentPage > 0 && currentPage <= totalPages ? currentPage : 1
   const nextPage = page < totalPages ? page + 1 : null
