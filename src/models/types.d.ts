@@ -1,9 +1,9 @@
 
 import { type Model } from 'sequelize'
-import { type EMAIL_STATUS, type TEST_STATUS } from './enums'
+import { type EMAIL_STATUS, type TEST_STATUS } from '../enums'
 
 export interface UserAttributes {
-  userId: string
+  userId?: string
   name: string
   lastname: string
   fullname: string | null
@@ -11,6 +11,7 @@ export interface UserAttributes {
   password?: string
   phoneNumber: string | null
   rememberToken: string | null
+  rol?: UserTypesAttributes
 }
 
 export interface AnswerAttributes {
@@ -47,17 +48,17 @@ export interface TestAttributes extends TestCommonAtrributes {
 }
 
 export interface UserTypesAttributes {
-  typeId: string
+  typeId?: string
   name: string
 }
 
 export interface TestTypesAttributes {
-  testTypeId: string
+  testTypeId?: string
   name: string
 }
 
 export interface ContentTypesAttributes {
-  contentTypeId: string
+  contentTypeId?: string
   name: string
 }
 
