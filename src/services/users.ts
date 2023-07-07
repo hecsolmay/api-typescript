@@ -3,16 +3,12 @@ import { UserTypes } from '../models/Types'
 import { TestUsers } from '../models/UnionTables'
 import User from '../models/Users'
 
-import { type CreateUserDTO } from '../types'
+import { type CreateUserDTO, type UserQueryWithPagination, type UserUpdateDTO } from '../types'
 import { ValidationRequestError } from '../utils/errors'
-import { updateUserFormat } from '../utils/format'
-import { getInfoPage, getLimitOffSet } from '../utils/pagination'
-import { getParamsUser } from '../utils/requestQuery'
+import { getInfoPage } from '../utils/pagination'
 
-export const getAllUsers = async (query: any, noDeleted = undefined) => {
-  const { limit, page, offset } = getLimitOffSet(query)
-
-  const { q, getDeleted } = getParamsUser(query)
+export const getAllUsers = async (query: UserQueryWithPagination, noDeleted?: boolean) => {
+  const { getDeleted, limit, offset, page, q } = query
 
   const getDeletedUsers = noDeleted !== undefined ? noDeleted : getDeleted
 
@@ -122,19 +118,22 @@ export const createUser = async (userToCreate: CreateUserDTO) => {
   return userCreated
 }
 
-export const updateUser = async (id: string, userFieldsDTO: any) => {
-  const { rol = 'user' } = userFieldsDTO
+export const updateUser = async (id: string, userFieldsDTO: UserUpdateDTO) => {
+  const { rol = 'user', ...restOfUser } = userFieldsDTO
   const foundRole = await UserTypes.findOne({ where: { name: rol } })
 
   if (foundRole === null) {
     throw new ValidationRequestError('Invalid Rol')
   }
 
-  userFieldsDTO.typeId = foundRole.dataValues.typeId
+  const updatedUserFields = {
+    ...restOfUser,
+    typeId: foundRole.dataValues.typeId
+  }
 
-  const newUser = updateUserFormat(userFieldsDTO)
+  console.log(updatedUserFields)
 
-  const updatedUser = await User.update(newUser, { where: { userId: id }, individualHooks: true })
+  const updatedUser = await User.update(updatedUserFields, { where: { userId: id }, individualHooks: true })
 
   return updatedUser
 }
