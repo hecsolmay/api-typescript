@@ -10,3 +10,8 @@ export const isDate = (date: string): boolean => {
 export const isNumber = (number: string): boolean => {
   return !isNaN(parseInt(number))
 }
+
+export const isEmail = (string: string): boolean => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  return emailRegex.test(string)
+}
