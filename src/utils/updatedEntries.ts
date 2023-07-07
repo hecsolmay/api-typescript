@@ -1,6 +1,6 @@
-import { type UserUpdateDTO } from '../types'
+import { type ObjectiveUpdateDTO, type UserUpdateDTO } from '../types'
 import { toPascalCase } from './format'
-import { parseEmail, parseString } from './parse'
+import { parseContentType, parseEmail, parseString } from './parse'
 
 export const toUpdateUserFields = (object: any): UserUpdateDTO => {
   const updateUser: UserUpdateDTO = {}
@@ -31,4 +31,22 @@ export const toUpdateUserFields = (object: any): UserUpdateDTO => {
   }
 
   return updateUser
+}
+
+export const toUpdateObjectiveFields = (object: any): ObjectiveUpdateDTO => {
+  const updateObjective: ObjectiveUpdateDTO = {}
+
+  const { contentType, content, label } = object
+
+  if (contentType !== undefined) {
+    updateObjective.contentType = parseContentType(contentType)
+  }
+  if (content !== undefined) {
+    updateObjective.content = parseString(content)
+  }
+  if (label !== undefined) {
+    updateObjective.label = parseString(label).toUpperCase().trim()
+  }
+
+  return updateObjective
 }

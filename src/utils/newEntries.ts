@@ -1,6 +1,6 @@
-import { type CreateUserDTO, type SignInFields } from '../types'
+import { type CreateUserDTO, type ObjectiveCreateDTO, type SignInFields } from '../types'
 import { toPascalCase } from './format'
-import { parseEmail, parseString } from './parse'
+import { parseContentType, parseEmail, parseString } from './parse'
 
 export const toSignInFields = (object: any): SignInFields => {
   const signIn: SignInFields = {
@@ -29,4 +29,16 @@ export const toNewUser = (object: any): CreateUserDTO => {
   }
 
   return signUp
+}
+
+export const toNewObjective = (object: any): ObjectiveCreateDTO => {
+  const label = parseString(object.label, 'label').toUpperCase().trim()
+  const contentType = parseContentType(object.contentType)
+  const content = parseString(object.content, 'content')
+
+  return {
+    content,
+    contentType,
+    label
+  }
 }
