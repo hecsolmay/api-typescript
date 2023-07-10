@@ -1,6 +1,6 @@
-import { type ObjectiveUpdateDTO, type UserUpdateDTO } from '../types'
+import { type TestUpdateDTO, type ObjectiveUpdateDTO, type UserUpdateDTO, type TestCommonCreateDTO } from '../types'
 import { toPascalCase } from './format'
-import { parseContentType, parseEmail, parseString } from './parse'
+import { parseArrayQuestions, parseContentType, parseDate, parseEmail, parseNumber, parseString, parseTestUsers } from './parse'
 
 export const toUpdateUserFields = (object: any): UserUpdateDTO => {
   const updateUser: UserUpdateDTO = {}
@@ -49,4 +49,36 @@ export const toUpdateObjectiveFields = (object: any): ObjectiveUpdateDTO => {
   }
 
   return updateObjective
+}
+
+export const toUpdateTest = (object: any): TestUpdateDTO => {
+  const { dateStart, dateEnd, practice, users } = object
+  const testCommonData = toCommonUpdateTest(object)
+
+  const newTest: TestUpdateDTO = { ...testCommonData }
+
+  if (dateStart !== undefined) newTest.dateStart = parseDate(dateStart, 'dateStart')
+  if (dateEnd !== undefined) newTest.dateEnd = parseDate(dateEnd, 'dateEnd')
+  if (practice !== undefined) newTest.practice = toCommonUpdateTest(practice)
+  if (users !== undefined) newTest.users = parseTestUsers(parseTestUsers)
+
+  return newTest
+}
+
+export const toCommonUpdateTest = (object: any): Partial<TestCommonCreateDTO> => {
+  const { name, ISI, SOA, pause, isRandom, questions } = object
+  const commonTest: Partial<TestCommonCreateDTO> = {}
+
+  if (name !== undefined) commonTest.name = parseString(name, 'name')
+  if (SOA !== undefined) commonTest.SOA = parseNumber(SOA, 'SOA')
+  if (ISI !== undefined) commonTest.ISI = parseNumber(ISI, 'ISI')
+  if (pause !== undefined) commonTest.pause = parseNumber(pause, 'pause')
+  if (isRandom !== undefined) commonTest.isRandom = isRandom
+  if (questions !== undefined) {
+    const parsedQuestions = parseArrayQuestions(questions)
+    commonTest.questions = parsedQuestions
+    commonTest.questionQuantity = parsedQuestions.length
+  }
+
+  return commonTest
 }

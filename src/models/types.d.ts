@@ -45,6 +45,7 @@ export interface TestCommonAtrributes {
 
 export interface PracticeAttributes extends TestCommonAtrributes {
   practiceId?: string
+  testId?: string
 }
 
 export interface TestAttributes extends TestCommonAtrributes {
@@ -52,6 +53,7 @@ export interface TestAttributes extends TestCommonAtrributes {
   dateStart: Date
   dateEnd: Date
   status: TEST_STATUS | null
+  practice?: PracticeAttributes[] | PracticeAttributes
 }
 
 export interface UserTypesAttributes {
@@ -72,17 +74,19 @@ export interface ContentTypesAttributes {
 export interface TaskAttributes {
   taskId: string
   fn: string
-  date: string
+  date: Date
 }
 
 export interface PracticeQuestionAttributes {
   practiceQuestionId?: string
   order: number
+  practiceId?: string
 }
 
 export interface TestQuestionAttributes {
   testQuestionId?: string
   order: number
+  testId?: string
 }
 
 export interface TestUserAttributes {
