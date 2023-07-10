@@ -6,6 +6,7 @@ import path from 'path'
 import authRoutes from './routes/auth.routes'
 import objectiveRoutes from './routes/objective.routes'
 import userRoutes from './routes/user.routes'
+import testRoutes from './routes/test.routes'
 
 const app = express()
 
@@ -20,6 +21,7 @@ app.get('/api', (_req, res) => {
 app.use('/api/auth', authRoutes)
 app.use('/api/user', userRoutes)
 app.use('/api/objective', objectiveRoutes)
+app.use('/api/test', testRoutes)
 app.use('/api/public', express.static(path.join(__dirname, '../public/uploads')))
 
 export default app
