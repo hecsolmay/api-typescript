@@ -17,7 +17,7 @@ const Task: ModelStatic<TaskModel> = sequelize.define<TaskModel>('task', {
     type: DataTypes.DATE,
     allowNull: false,
     get () {
-      return new Date(Date.parse(this.getDataValue('date')))
+      return new Date(this.getDataValue('date'))
     }
   }
 }, {

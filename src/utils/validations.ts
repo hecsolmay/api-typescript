@@ -20,3 +20,7 @@ export const isEmail = (string: string): boolean => {
 export const isContentType = (param: any): boolean => {
   return Object.values(CONTENT_TYPES).includes(param)
 }
+
+export const isArray = (arg: any): boolean => {
+  return Array.isArray(arg)
+}

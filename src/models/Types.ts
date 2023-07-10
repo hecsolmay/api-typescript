@@ -2,7 +2,7 @@ import { DataTypes, type ModelStatic } from 'sequelize'
 import { sequelize } from '../database'
 import { type ContentTypesModel, type TestTypesModel, type UserTypesModel } from './types.d'
 
-export const UserTypes: ModelStatic<UserTypesModel> = sequelize.define<UserTypesModel>('user_types', {
+export const UserTypes: ModelStatic<UserTypesModel> = sequelize?.define<UserTypesModel>('user_types', {
   typeId: {
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4,
@@ -18,7 +18,7 @@ export const UserTypes: ModelStatic<UserTypesModel> = sequelize.define<UserTypes
   paranoid: true
 })
 
-export const TestTypes: ModelStatic<TestTypesModel> = sequelize.define<TestTypesModel>('test_types', {
+export const TestTypes: ModelStatic<TestTypesModel> = sequelize?.define<TestTypesModel>('test_types', {
   testTypeId: {
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4,
@@ -34,7 +34,7 @@ export const TestTypes: ModelStatic<TestTypesModel> = sequelize.define<TestTypes
   paranoid: true
 })
 
-export const ContentTypes: ModelStatic<ContentTypesModel> = sequelize.define<ContentTypesModel>('content_types', {
+export const ContentTypes: ModelStatic<ContentTypesModel> = sequelize?.define<ContentTypesModel>('content_types', {
   contentTypeId: {
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4,
