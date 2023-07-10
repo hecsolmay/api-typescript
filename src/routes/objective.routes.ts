@@ -1,10 +1,7 @@
 import { Router } from 'express'
 import * as objectiveCtrl from '../controllers/objective.controller'
-import { validate } from '../middlewares/validations'
 import { uploadFile } from '../middlewares/multer'
-
-// const { checkValidContentType } = require('../middlewares/verifyFK')
-// const { uploadFile } = require('../middlewares/multer')
+import { validate } from '../middlewares/validations'
 
 const router = Router()
 
@@ -16,6 +13,6 @@ router.put('/restore/:id', objectiveCtrl.restoreObjective)
 router.post('/', [uploadFile, validate(createObjectiveFields)], objectiveCtrl.createObjective)
 router.get('/:id', objectiveCtrl.getObjectiveById)
 router.delete('/:id', objectiveCtrl.deleteObjective)
-// router.put('/:id', [uploadFile, checkValidContentType], objectiveCtrl.updateObjective)
+router.put('/:id', [uploadFile], objectiveCtrl.updateObjective)
 
 export default router

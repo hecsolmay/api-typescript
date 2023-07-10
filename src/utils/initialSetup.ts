@@ -55,3 +55,9 @@ export const createTestTypes = async () => {
     console.error(err)
   }
 }
+
+(async () => {
+  await checkUserRoles()
+  await createContents()
+  await createTestTypes()
+})()

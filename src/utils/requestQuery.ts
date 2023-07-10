@@ -1,4 +1,4 @@
-import { type ObjectiveQueryWithPagination, type UserQueryParams, type UserQueryWithPagination } from '../types'
+import { type ObjectiveQueryWithPagination, type TestQueryParams, type TestQueryWithPagination, type UserQueryParams, type UserQueryWithPagination } from '../types'
 import { getLimitOffSet } from './pagination'
 
 export const getUserQueryWithPagination = (object: any): UserQueryWithPagination => {
@@ -11,16 +11,16 @@ export const getUserQueryWithPagination = (object: any): UserQueryWithPagination
   return { ...query, ...pagination }
 }
 
-export const getParamsTest = (object: any) => {
+export const getTestQueryWithPagination = (object: any): TestQueryWithPagination => {
   const { experimenter = null } = object
 
-  const params = {
-    experimenterId: undefined
-  }
+  const pagination = getLimitOffSet(object)
+
+  const params: TestQueryParams = {}
 
   if (experimenter !== null) { params.experimenterId = experimenter }
 
-  return params
+  return { ...params, ...pagination }
 }
 
 export const getObjectiveQueryWithPagination = (object: any): ObjectiveQueryWithPagination => {
