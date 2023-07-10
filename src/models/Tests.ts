@@ -66,7 +66,33 @@ const Test: ModelStatic<TestModel> = sequelize.define<TestModel>('tests', {
   }
 }, {
   freezeTableName: true,
-  paranoid: true
-})
+  paranoid: true,
+  hooks: {
+    afterFind: (results: TestModel | TestModel[]) => {
+      if (Array.isArray(results)) {
+        // Si es un arreglo de resultados
+        results.forEach((result) => {
+          modifyContent(result)
+        })
+      } else {
+        // Si es un solo resultado
+        modifyContent(results)
+      }
+    }
+  }
+}
+)
+
+function modifyContent (result: TestModel) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { practice } = result
+  console.log(practice)
+
+  if (result.practice !== undefined && Array.isArray(result.practice) && result.practice.length !== 0) {
+    const onePractice = result.practice[0]
+    console.log(onePractice)
+    result.setDataValue('practice', onePractice)
+  }
+}
 
 export default Test
