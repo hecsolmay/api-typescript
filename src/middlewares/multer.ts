@@ -69,7 +69,7 @@ const generateOptimizedImages = async (image: Express.Multer.File) => {
 export const uploadFile = (req: Request, res: Response, next: NextFunction) => {
   const uploaded = upload.single('file')
 
-  return uploaded(req, res, async function (err) {
+  uploaded(req, res, async function (err) {
     if (err instanceof MulterError || err instanceof MulterValidationError) {
       return res.status(400).json({ message: 'Error al subir los archivos', error: err.message })
     }
