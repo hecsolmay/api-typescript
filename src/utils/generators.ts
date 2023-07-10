@@ -38,11 +38,11 @@ export const mailGenerator = ({ username = 'UserName', password = '123456' }: { 
   return mailGenerator.generate(mail)
 }
 
-export const generateInvitationEmail = ({ email, userName, testId, date = new Date() }:
-{ email?: string, userName?: string, testId: string, date: Date | string }) => {
+export const generateInvitationEmail = ({ email, userName, testId, dateToStart = new Date() }:
+{ email?: string, userName?: string, testId: string, dateToStart: Date | string }) => {
   if (email === undefined) return null
 
-  const formatedDate = new Date(date).toLocaleDateString()
+  const formatedDate = new Date(dateToStart).toLocaleDateString()
 
   const mailGenerator = new Mailgen({
     theme: 'default',
@@ -74,11 +74,11 @@ export const generateInvitationEmail = ({ email, userName, testId, date = new Da
   return mailGenerator.generate(mail)
 }
 
-export const generateReAsignationEmail = ({ email, userName, testId, date = new Date() }:
-{ email?: string, userName?: string, testId: string, date: Date | string }) => {
+export const generateReAsignationEmail = ({ email, userName, testId, dateToStart = new Date() }:
+{ email?: string, userName?: string, testId: string, dateToStart: Date | string }) => {
   if (email === undefined) return null
 
-  const formatedDate = new Date(date).toLocaleDateString()
+  const formatedDate = new Date(dateToStart).toLocaleDateString()
 
   const mailGenerator = new Mailgen({
     theme: 'default',
