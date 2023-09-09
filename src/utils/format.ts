@@ -8,21 +8,6 @@ export const toPascalCase = (string: string) => {
   return pascalArray.join(' ')
 }
 
-export const updateUserFormat = (object: any) => {
-  const { name = undefined, lastname = undefined, email = undefined, typeId = undefined, phoneNumber = undefined, password = undefined } = object
-
-  let newObj = {}
-
-  if (name !== undefined) newObj = { ...newObj, name: toPascalCase(name) }
-  if (lastname !== undefined) newObj = { ...newObj, lastname: toPascalCase(lastname) }
-  if (email !== undefined) newObj = { ...newObj, email: email.toLowerCase().trim() }
-  if (typeId !== undefined) newObj = { ...newObj, typeId }
-  if (phoneNumber !== undefined) newObj = { ...newObj, phoneNumber }
-  if (password !== undefined) newObj = { ...newObj, password }
-
-  return newObj
-}
-
 export const updateObjectiveFormat = (object: any) => {
   const { label = undefined, content = undefined } = object
 

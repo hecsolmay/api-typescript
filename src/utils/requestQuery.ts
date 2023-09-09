@@ -1,33 +1,35 @@
-interface ParamsUser {
-  q?: string
-  getDeleted?: boolean
+import { type ObjectiveQueryWithPagination, type TestQueryParams, type TestQueryWithPagination, type UserQueryParams, type UserQueryWithPagination } from '../types'
+import { getLimitOffSet } from './pagination'
+
+export const getUserQueryWithPagination = (object: any): UserQueryWithPagination => {
+  const { q = '' } = object
+
+  const pagination = getLimitOffSet(object)
+
+  const query: UserQueryParams = { getDeleted: false, q }
+
+  return { ...query, ...pagination }
 }
 
-export const getParamsUser = (object: ParamsUser) => {
-  const { q = '', getDeleted = false } = object
-
-  return {
-    q,
-    getDeleted
-  }
-}
-
-export const getParamsTest = (object: any) => {
+export const getTestQueryWithPagination = (object: any): TestQueryWithPagination => {
   const { experimenter = null } = object
 
-  const params = {
-    experimenterId: undefined
-  }
+  const pagination = getLimitOffSet(object)
+
+  const params: TestQueryParams = {}
 
   if (experimenter !== null) { params.experimenterId = experimenter }
 
-  return params
+  return { ...params, ...pagination }
 }
 
-export const getParamsObjectives = (object: any) => {
+export const getObjectiveQueryWithPagination = (object: any): ObjectiveQueryWithPagination => {
   const { label = '' } = object
 
+  const pagination = getLimitOffSet(object)
+
   return {
-    label: label.trim().toUpperCase()
+    ...pagination,
+    label
   }
 }

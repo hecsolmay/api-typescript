@@ -31,7 +31,6 @@ export const authenticateToken = async (req: Request, res: Response, next: NextF
     // eslint-disable-next-line no-useless-return
     return
   } catch (error) {
-    console.error(error)
     return handleError(error, res)
   }
 }
@@ -67,8 +66,6 @@ export const authenticateRefreshToken = async (req: Request, res: Response, next
     // eslint-disable-next-line no-useless-return
     return
   } catch (error) {
-    console.error(error)
-
     return handleError(error, res)
   }
 }

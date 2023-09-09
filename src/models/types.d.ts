@@ -14,17 +14,24 @@ export interface UserAttributes {
   rol?: UserTypesAttributes
 }
 
+export interface ImageContent {
+  main: string
+  preview: string
+  thumbnail: string
+}
+
 export interface AnswerAttributes {
-  answerId: string
+  answerId?: string
   answer: string
   time: number
   order: number
 }
 
 export interface ObjectiveAttributes {
-  objectiveId: string
+  objectiveId?: string
   label: string
-  content: string
+  content: string | ImageContent
+  contentType?: ContentTypesAttributes
 }
 
 export interface TestCommonAtrributes {
@@ -37,14 +44,16 @@ export interface TestCommonAtrributes {
 }
 
 export interface PracticeAttributes extends TestCommonAtrributes {
-  practiceId: string
+  practiceId?: string
+  testId?: string
 }
 
 export interface TestAttributes extends TestCommonAtrributes {
-  testId: string
+  testId?: string
   dateStart: Date
   dateEnd: Date
   status: TEST_STATUS | null
+  practice?: PracticeAttributes[] | PracticeAttributes
 }
 
 export interface UserTypesAttributes {
@@ -65,21 +74,23 @@ export interface ContentTypesAttributes {
 export interface TaskAttributes {
   taskId: string
   fn: string
-  date: string
+  date: Date
 }
 
 export interface PracticeQuestionAttributes {
-  practiceQuestionId: string
+  practiceQuestionId?: string
   order: number
+  practiceId?: string
 }
 
 export interface TestQuestionAttributes {
-  testQuestionId: string
+  testQuestionId?: string
   order: number
+  testId?: string
 }
 
 export interface TestUserAttributes {
-  testUserId: string
+  testUserId?: string
   emailStatus: EMAIL_STATUS
   testId?: string
   userId?: string

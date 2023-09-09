@@ -1,14 +1,13 @@
 import { type Request, type Response } from 'express'
-import nodemailer from 'nodemailer'
 
-import { mailerEmail, mailerPassword } from '../config'
+import { sendMail } from '../services/mail'
 import * as services from '../services/users'
+import { type RequestWithUser } from '../types'
 import { handleError } from '../utils/errors'
 import { generatePassword, mailGenerator } from '../utils/generators'
 import { toNewUser, toSignInFields } from '../utils/newEntries'
+import { parseEmail } from '../utils/parse'
 import { tokenRefreshSign, tokenSign } from '../utils/token'
-import { parseString } from '../utils/parse'
-import { type RequestWithUser } from '../types'
 
 export const signIn = async (req: Request, res: Response) => {
   try {
@@ -53,7 +52,7 @@ export const singUp = async (req: Request, res: Response) => {
 
 export const restorePassword = async (req: Request, res: Response) => {
   try {
-    const email = parseString(req.body.email)
+    const email = parseEmail(req.body.email)
     const user = await services.searchUser(email.toLowerCase().trim())
 
     if (user === null) {
@@ -62,36 +61,11 @@ export const restorePassword = async (req: Request, res: Response) => {
 
     const newPassword = generatePassword()
 
-    await user.update({ password: newPassword })
-
-    // ** Transporter para IONOS
-
-    const transporter = nodemailer.createTransport({
-      host: 'smtp.ionos.com',
-      port: 587,
-      secure: false,
-      auth: {
-        user: mailerEmail,
-        pass: mailerPassword
-      }
-    })
+    await user.update({ password: '1234' })
 
     const mail = mailGenerator({ password: newPassword, username: user.fullname })
 
-    const mailOptions = {
-      from: mailerEmail,
-      to: email,
-      subject: 'Restauración de contraseña',
-      html: mail
-    }
-    transporter.sendMail(mailOptions, (error, info) => {
-      if (error != null) {
-        console.error(error)
-        return res.status(500).json({ message: 'Error al enviar el correo electrónico', error: error.message })
-      } else {
-        return res.json({ message: 'Correo electrónico enviado: ', info: info.response })
-      }
-    })
+    sendMail(res, email, mail, 'Restauración de contraseña')
 
     return null
   } catch (error) {
