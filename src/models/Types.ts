@@ -1,6 +1,8 @@
 import { DataTypes, type ModelStatic } from 'sequelize'
-import { sequelize } from '../database'
-import { type ContentTypesModel, type TestTypesModel, type UserTypesModel } from './types.d'
+// import { sequelize } from '../database'
+// import { sequelize } from '@/database'
+import { type ContentTypesModel, type TestTypesModel, type UserTypesModel } from '@/models/types.d'
+import { sequelize } from '@/database'
 
 export const UserTypes: ModelStatic<UserTypesModel> = sequelize.define<UserTypesModel>('user_types', {
   typeId: {
